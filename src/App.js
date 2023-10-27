@@ -1,9 +1,13 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions,Image} from 'react-native';
 import {Scissor, Profile, Pet, ProfileCircle, Link2} from 'iconsax-react-native';
 
+
+
 const width = Dimensions.get("window").width;
 export default function App() {
+  const [dog, setDog] = useState('Pitbull');
+  const[dog1, setDog1] = useState('Husky');
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#fffacd'}}>
     <View >
@@ -22,6 +26,7 @@ export default function App() {
         </View>
         <ProfileCircle color="#000000" variant="Bold" size={50} />
       </View>
+      <Chill props={
       <View style={styles.header}>
         <View style={category.title}>
           <View
@@ -50,7 +55,7 @@ export default function App() {
           </View>
           <Text style={{fontSize: 20}}>Walking</Text>
         </View>
-      </View>
+      </View>}/>
       <ScrollView horizontal contentContainerStyle={{gap:10, paddingHorizontal:10}}>
         <View style={category.blogs}>
           <Text
@@ -90,7 +95,7 @@ export default function App() {
               source={{uri:'https://www.dictio.id/uploads/db3342/original/3X/2/9/29da1897d406ea84691edf38917b4500c301adbe.jpeg',}}
             />
             <View style={{margin:20}}>
-              <Text style={{fontSize:20,fontWeight:'bold',}}>Pibull</Text>
+              <Text style={{fontSize:20,fontWeight:'bold',}}>{dog}</Text>
               <View style={{ height:100, marginRight:100}}>
                 <Text style={{fontSize:14}}>Doberman Pitbull mix is a hybrid buddy which has designed by crossing American Pit bull terrier and</Text>
               </View>
@@ -102,7 +107,7 @@ export default function App() {
               source={{uri:'https://www.akc.org/wp-content/uploads/2018/08/Siberian-Husky-Mom-and-Puppy.jpg',}}
             />
             <View style={{margin:18}}>
-              <Text style={{fontSize:20,fontWeight:'bold',}}>Husky</Text>
+              <Text style={{fontSize:20,fontWeight:'bold',}}>{dog1}</Text>
               <View style={{ height:100, marginRight:100}}>
                 <Text style={{fontSize:14}}>They are high-energy, independent thinkers with a knack for escaping and a love of running, so they’re not the breed for everyone.</Text>
               </View>
@@ -111,6 +116,15 @@ export default function App() {
     </View>
     </ScrollView>
   );
+}
+
+
+export function Chill({props}) {
+  return (
+    <View>
+      {props}
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
