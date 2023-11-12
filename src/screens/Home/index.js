@@ -1,11 +1,15 @@
 import React,{useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Dimensions,Image} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Dimensions,Image,TouchableOpacity} from 'react-native';
 import {Scissor, Profile, Pet, ProfileCircle, Link2} from 'iconsax-react-native';
+
+
+import {useNavigation} from '@react-navigation/native';
 
 
 
 const width = Dimensions.get("window").width;
 export default function Home() {
+const navigation = useNavigation();
   const [dog, setDog] = useState('Pitbull');
   const[dog1, setDog1] = useState('Husky');
   return (
@@ -89,7 +93,7 @@ export default function Home() {
         <View>
           <Text style={{fontSize: 32, fontWeight: 'bold', color: '#383838', left:10}}>blogs</Text>
         </View>
-        <View style={{backgroundColor:'#ffd700', height:120, borderRadius:15, margin: 10, flexDirection: 'row'}}>
+        <TouchableOpacity style={{backgroundColor:'#ffd700', height:120, borderRadius:15, margin: 10, flexDirection: 'row'}} onPress={() => navigation.navigate('Detail')}>
             <Image 
               style={{height: 100, width: 100, borderRadius:10,left:10,alignSelf: 'center' }}
               source={{uri:'https://www.dictio.id/uploads/db3342/original/3X/2/9/29da1897d406ea84691edf38917b4500c301adbe.jpeg',}}
@@ -100,8 +104,8 @@ export default function Home() {
                 <Text style={{fontSize:14}}>Doberman Pitbull mix is a hybrid buddy which has designed by crossing American Pit bull terrier and</Text>
               </View>
             </View>
-        </View>
-        <View style={{backgroundColor:'#ffd700', height:120, borderRadius:15, margin: 10, flexDirection: 'row'}}>
+        </TouchableOpacity>
+        <TouchableOpacity style={{backgroundColor:'#ffd700', height:120, borderRadius:15, margin: 10, flexDirection: 'row'}} onPress={() => navigation.navigate('Detail')}>
             <Image 
               style={{height: 100, width: 100, borderRadius:10,left:10,alignSelf: 'center',backgroundColor: 'white' }}
               source={{uri:'https://www.akc.org/wp-content/uploads/2018/08/Siberian-Husky-Mom-and-Puppy.jpg',}}
@@ -112,7 +116,7 @@ export default function Home() {
                 <Text style={{fontSize:14}}>They are high-energy, independent thinkers with a knack for escaping and a love of running, so they’re not the breed for everyone.</Text>
               </View>
             </View>
-        </View>
+        </TouchableOpacity>
     </View>
     </ScrollView>
   );

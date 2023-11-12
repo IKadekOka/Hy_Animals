@@ -1,8 +1,10 @@
-import {BlogList, CategoryList} from '../../../data';
-import { fontType, colors } from '../../theme';
-import { ListHorizontal, ItemSmall } from '../../components';
-import { Home,Nearby, Profile, } from './screens';
-
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import Router from './navigation/Router';
 export default function App() {
-    return <Profile />;
-  }
+  return (
+    <NavigationContainer>
+     <Router/>
+    </NavigationContainer>
+  );
+}

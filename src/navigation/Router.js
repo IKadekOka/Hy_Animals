@@ -1,9 +1,9 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home,Nearby, Profile, BlogDetail} from '../screens';
+import {Detail, Home,Nearby, Profile} from '../screens';
 import {Home2, LocationDiscover, Receipt21, ProfileCircle} from 'iconsax-react-native'; 
-import { fontType, colors } from '../theme';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -12,8 +12,8 @@ function MainApp() {
     <Tab.Navigator
       screenOptions={{
         tabBarHideOnKeyboard: true,
-        tabBarActiveTintColor: colors.blue(),
-        tabBarInactiveTintColor: colors.black(),
+        tabBarActiveTintColor: 'blue',
+        tabBarInactiveTintColor: 'black',
         tabBarStyle: {
           paddingBottom: 10,
           paddingTop: 10,
@@ -22,7 +22,7 @@ function MainApp() {
         tabBarLabelStyle: {
           marginTop: 5,
           fontSize: 10,
-          fontFamily: fontType['Pjs-Medium'],
+          
         },
       }}>
       <Tab.Screen
@@ -82,8 +82,8 @@ const Router = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="BlogDetail"
-        component={BlogDetail}
+        name="Detail"   
+        component={Detail}
         options={{
           headerShown: false, 
           animationEnabled: true,
