@@ -1,8 +1,6 @@
 import React,{useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Dimensions,Image,TouchableOpacity} from 'react-native';
 import {Scissor, Profile, Pet, ProfileCircle, Link2} from 'iconsax-react-native';
-
-
 import {useNavigation} from '@react-navigation/native';
 
 

@@ -1,9 +1,13 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Detail, Home,Nearby, Profile} from '../screens';
-import {Home2, LocationDiscover, Receipt21, ProfileCircle} from 'iconsax-react-native'; 
-
+import {Home, Nearby, Profile,AddBlogForm, Detail} from '../screens';
+import {
+  Home2,
+  LocationDiscover,
+  Receipt21,
+  ProfileCircle,
+} from 'iconsax-react-native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -12,7 +16,7 @@ function MainApp() {
     <Tab.Navigator
       screenOptions={{
         tabBarHideOnKeyboard: true,
-        tabBarActiveTintColor: 'blue',
+        tabBarActiveTintColor: '#f5b405',
         tabBarInactiveTintColor: 'black',
         tabBarStyle: {
           paddingBottom: 10,
@@ -22,7 +26,6 @@ function MainApp() {
         tabBarLabelStyle: {
           marginTop: 5,
           fontSize: 10,
-          
         },
       }}>
       <Tab.Screen
@@ -82,14 +85,34 @@ const Router = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="Detail"   
+        name="Detail"
         component={Detail}
         options={{
-          headerShown: false, 
+          headerShown: false,
           animationEnabled: true,
           animationTypeForReplace: 'pop',
           gestureEnabled: true,
-          gestureDirection : 'horizontal',
+          gestureDirection: 'horizontal',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      {/* <Stack.Screen
+        name="SearchPage"
+        component={Search}
+        options={{
+          headerShown: false,
+          presentation: 'transparentModal',
+        }}
+      /> */}
+      <Stack.Screen
+        name="AddBlog"
+        component={AddBlogForm}
+        options={{
+          headerShown: false,
+          animationEnabled: true,
+          animationTypeForReplace: 'pop',
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
           ...TransitionPresets.SlideFromRightIOS,
         }}
       />
