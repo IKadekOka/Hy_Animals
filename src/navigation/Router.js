@@ -8,6 +8,7 @@ import {
   Receipt21,
   ProfileCircle,
 } from 'iconsax-react-native';
+import EditForm from '../screens/EditForm';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -107,6 +108,18 @@ const Router = () => {
       <Stack.Screen
         name="AddBlog"
         component={AddBlogForm}
+        options={{
+          headerShown: false,
+          animationEnabled: true,
+          animationTypeForReplace: 'pop',
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          ...TransitionPresets.SlideFromRightIOS,
+        }}
+      />
+      <Stack.Screen
+        name="EditForm"
+        component={EditForm}
         options={{
           headerShown: false,
           animationEnabled: true,

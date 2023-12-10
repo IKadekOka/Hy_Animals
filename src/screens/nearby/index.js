@@ -8,15 +8,20 @@ import {
   Image,
   TouchableOpacity
 } from 'react-native';
-import React, {useRef, useEffect} from 'react';
-import {Setting2, Edit} from 'iconsax-react-native';
-import {useNavigation} from '@react-navigation/native';
+import React, {useRef, useEffect, useCallback, useState} from 'react';
+import {Setting2, Edit, More} from 'iconsax-react-native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {Location, SearchNormal} from 'iconsax-react-native';
+import ItemNearby from '../../componens/ItemNearby';
+import axios from 'axios';
 
 // const scrollY = useRef(new Animated.Value(0)).current;
 const Nearby = () => {
   const navigation = useNavigation();
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [loading, setLoading] = useState(true);
+  const [blogData, setBlogData] = useState([]);
+
   const fadeIn = () => {
     // Will change fadeAnim value to 1 in 5 seconds
     Animated.timing(fadeAnim, {
@@ -28,6 +33,23 @@ const Nearby = () => {
   useEffect(() => {
     fadeIn();
   });
+
+  const getDataBlog = async () => {
+    try {
+      const response = await axios.get(
+        'https://657577feb2fbb8f6509d1e36.mockapi.io/Hy_animal/blog',
+      );
+      setBlogData(response.data);
+      setLoading(false)
+    } catch (error) {
+        console.error(error);
+    }
+  };
+  useFocusEffect(
+    useCallback(() => {
+      getDataBlog();
+    }, [])
+  );
   const fadeOut = () => {
     // Will change fadeAnim value to 0 in 3 seconds
     Animated.timing(fadeAnim, {
@@ -208,168 +230,20 @@ const Nearby = () => {
             <Text>My Location</Text>
           </View>
         </View>
-        <Animated.View
-          style={{
-            backgroundColor: '#ffffff',
-            opacity: fadeAnim,
-            elevation: 10,
-            height: 120,
-            borderRadius: 15,
-            margin: 10,
-            flexDirection: 'row',
-          }}>
-          <Image
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: 10,
-              left: 10,
-              alignSelf: 'center',
-            }}
-            source={require('../../assets/images/people.jpg')}
-          />
-          <View style={{margin: 20}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-              {' '}
-              Windy Kartika
-            </Text>
-            <View style={{height: 100, marginRight: 100}}>
-              <Text style={{fontSize: 14}}>
-                Jl. Anak Agung Gede Rai, Lodtunduh, Kecamatan Ubud, Kabupaten
-                Gianyar, Bali 80571
-              </Text>
-            </View>
-          </View>
-        </Animated.View>
-        <Animated.View
-          style={{
-            backgroundColor: '#ffffff',
-            elevation: 10,
-            opacity: fadeAnim,
-            height: 120,
-            borderRadius: 15,
-            margin: 10,
-            flexDirection: 'row',
-          }}>
-          <Image
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: 10,
-              left: 10,
-              alignSelf: 'center',
-            }}
-            source={require('../../assets/images/people1.jpg')}
-          />
-          <View style={{margin: 20}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
-              Putri Kaswari
-            </Text>
-            <View style={{height: 100, marginRight: 100}}>
-              <Text style={{fontSize: 14}}>
-                Bunga Mekar, Kec. Nusa Penida, Kabupaten Klungkung, Bali 80771
-              </Text>
-            </View>
-          </View>
-        </Animated.View>
-        <Animated.View
-          style={{
-            backgroundColor: '#ffffff',
-            opacity: fadeAnim,
-            elevation: 10,
-            height: 120,
-            borderRadius: 15,
-            margin: 10,
-            flexDirection: 'row',
-          }}>
-          <Image
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: 10,
-              left: 10,
-              alignSelf: 'center',
-            }}
-            source={require('../../assets/images/people2.jpg')}
-          />
-          <View style={{margin: 20}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}> Pitbull</Text>
-            <View style={{height: 100, marginRight: 100}}>
-              <Text style={{fontSize: 14}}>
-                Jl. Pantai Kedungu, Desa Belalang, Belalang, Kediri, Tabanan
-                Regency, Bali
-              </Text>
-            </View>
-          </View>
-        </Animated.View>
-        <Animated.View
-          style={{
-            backgroundColor: '#ffffff',
-            opacity: fadeAnim,
-            elevation: 10,
-            height: 120,
-            borderRadius: 15,
-            margin: 10,
-            flexDirection: 'row',
-          }}>
-          <Image
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: 10,
-              left: 10,
-              alignSelf: 'center',
-            }}
-            source={require('../../assets/images/people2.jpg')}
-          />
-          <View style={{margin: 20}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}> Pitbull</Text>
-            <View style={{height: 100, marginRight: 100}}>
-              <Text style={{fontSize: 14}}>
-                Jl. Pantai Kedungu, Desa Belalang, Belalang, Kediri, Tabanan
-                Regency, Bali
-              </Text>
-            </View>
-          </View>
-        </Animated.View>
-        
-        <View
-          style={{
-            backgroundColor: '#ffffff',
-            elevation: 10,
-            height: 120,
-            borderRadius: 15,
-            margin: 10,
-            flexDirection: 'row',
-          }}>
-          <Image
-            style={{
-              height: 100,
-              width: 100,
-              borderRadius: 10,
-              left: 10,
-              alignSelf: 'center',
-            }}
-            source={require('../../assets/images/people2.jpg')}
-          />
-          <View style={{margin: 20}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}> Pitbull</Text>
-            <View style={{height: 100, marginRight: 100}}>
-              <Text style={{fontSize: 14}}>
-                Jl. Pantai Kedungu, Desa Belalang, Belalang, Kediri, Tabanan
-                Regency, Bali
-              </Text>
-            </View>
-          </View>
-        </View>
-        <TouchableOpacity
+        {
+          blogData && blogData.map((item,index) => {
+            return(
+              <ItemNearby item={item} key={index}/>
+            )
+          })
+        }
+      </View>
+      <TouchableOpacity
           style={styles.floatingButton}
           onPress={() => navigation.navigate('AddBlog')}>
           <Edit variant="Linear" size={20} color="#000000"/>
         </TouchableOpacity>
-      </View>
     </ScrollView>
-    
   );
 };
 
