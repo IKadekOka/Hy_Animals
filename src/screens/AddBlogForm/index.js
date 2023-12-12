@@ -7,11 +7,13 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
+  Image,
 } from "react-native";
-import { ArrowLeft } from "iconsax-react-native";
+import { Add, AddSquare, ArrowLeft } from "iconsax-react-native";
 import { useNavigation } from "@react-navigation/native";
-import axios from 'axios';
-
+import ImagePicker from 'react-native-image-crop-picker';
+import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 
 const AddBlogForm = () => {
   const [loading, setLoading] = useState(false);
@@ -26,6 +28,21 @@ const AddBlogForm = () => {
     alamat: "",
     category: {},
   });
+  const handleImagePick = async () => {
+    ImagePicker.openPicker({
+      width: 1500,
+      height: 1500,
+      cropping: true,
+    })
+      .then(image => {
+        console.log(image);
+        setImage(image.path);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   const handleChange = (key, value) => {
     setBlogData({
       ...blogData,
@@ -36,21 +53,23 @@ const AddBlogForm = () => {
   const navigation = useNavigation();
 
   const handleUpload = async () => {
+    let filename = image.substring(image.lastIndexOf('/') + 1);
+    const extension = filename.split('.').pop();
+    const name = filename.split('.').slice(0, -1).join('.');
+    filename = name + Date.now() + '.' + extension;
+    const reference = storage().ref(`blogimages/${filename}`);
+
     setLoading(true);
     try {
-      await axios.post('https://657577feb2fbb8f6509d1e36.mockapi.io/Hy_animal/blog', {
-          nama: blogData.nama,
-          alamat: blogData.alamat,
-          image,
+      await reference.putFile(image);
+      const url = await reference.getDownloadURL();
+      await firestore().collection('blog').add({
+        nama: blogData.nama,
+        alamat: blogData.alamat,
+          image: url,
           category: blogData.category,
           createdAt: new Date(),
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      });
       setLoading(false);
       navigation.navigate('Nearby');
     } catch (e) {
@@ -94,15 +113,54 @@ const AddBlogForm = () => {
             style={textInput.alamat}
           />
         </View>
-        <View style={[textInput.borderDashed]}>
-          <TextInput
-            placeholder="Image"
-            value={image}
-            onChangeText={(text) => setImage(text)}
-            placeholderTextColor="grey"
-            style={textInput.content}
-          />
-        </View>
+        {image ? (
+          <View style={{position: 'relative'}}>
+            <Image
+              style={{width: '100%', height: 127, borderRadius: 5}}
+              source={{
+                uri: image,
+              }}
+            />
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                top: -5,
+                right: -5,
+                backgroundColor: "blue",
+                borderRadius: 25,
+              }}
+              onPress={() => setImage(null)}>
+              <Add
+                size={20}
+                variant="Linear"
+                color="white"
+                style={{transform: [{rotate: '45deg'}]}}
+              />
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity onPress={handleImagePick}>
+            <View
+              style={[
+                textInput.borderDashed,
+                {
+                  gap: 10,
+                  paddingVertical: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                },
+              ]}>
+              <AddSquare color="grey" variant="Linear" size={42} />
+              <Text
+                style={{
+                  fontSize: 12,
+                  color: "grey",
+                }}>
+                Upload Thumbnail
+              </Text>
+            </View>
+          </TouchableOpacity>
+        )}
         <View style={[textInput.borderDashed]}>
           <Text
             style={{

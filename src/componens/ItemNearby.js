@@ -4,6 +4,8 @@ import { More } from 'iconsax-react-native'
 import ActionSheet from 'react-native-actions-sheet';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
 const ItemNearby = ({item}) => {
 
@@ -21,14 +23,25 @@ const ItemNearby = ({item}) => {
     navigation.navigate('EditForm', {dataId : item.id})
   }
   const handleDelete = async () => {
-   await axios  .delete(`https://657577feb2fbb8f6509d1e36.mockapi.io/Hy_animal/blog/${item.id}`)
-      .then(() => {
-        closeActionSheet()
-        navigation.navigate('Nearby');
-      })
-      .catch((error) => {
+    try {
+        await firestore()
+          .collection('blog')
+          .doc(item.id)
+          .delete()
+          .then(() => {
+            console.log('Blog deleted!');
+          });
+        if (item?.image) {
+          const imageRef = storage().refFromURL(item?.image);
+          await imageRef.delete();
+        }
+        console.log('Blog deleted!');
+        closeActionSheet();
+        setLoading(false)
+        navigation.navigate('Profile');
+      } catch (error) {
         console.error(error);
-      });
+      }
   }
 
   const navigation = useNavigation();

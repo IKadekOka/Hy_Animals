@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "480340038568",
+    "project_id": "hyanimals-8b1e2",
+    "storage_bucket": "hyanimals-8b1e2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480340038568:android:ce0a08fcbd8d9f0b03c39d",
+        "android_client_info": {
+          "package_name": "com.hy_animals"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbjBmyvqnZ_YR4UNcd0J-Jg7Tf80Pjn1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,6 +14,7 @@ import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import {Location, SearchNormal} from 'iconsax-react-native';
 import ItemNearby from '../../componens/ItemNearby';
 import axios from 'axios';
+import firestore from '@react-native-firebase/firestore';
 
 // const scrollY = useRef(new Animated.Value(0)).current;
 const Nearby = () => {
@@ -34,30 +35,23 @@ const Nearby = () => {
     fadeIn();
   });
 
-  const getDataBlog = async () => {
-    try {
-      const response = await axios.get(
-        'https://657577feb2fbb8f6509d1e36.mockapi.io/Hy_animal/blog',
-      );
-      setBlogData(response.data);
-      setLoading(false)
-    } catch (error) {
-        console.error(error);
-    }
-  };
-  useFocusEffect(
-    useCallback(() => {
-      getDataBlog();
-    }, [])
-  );
-  const fadeOut = () => {
-    // Will change fadeAnim value to 0 in 3 seconds
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 3000,
-      useNativeDriver: true,
-    }).start();
-  };
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('blog')
+      .onSnapshot(querySnapshot => {
+        const blogs = [];
+        querySnapshot.forEach(documentSnapshot => {
+          blogs.push({
+            ...documentSnapshot.data(),
+            id: documentSnapshot.id,
+          });
+        });
+        setBlogData(blogs);
+        setLoading(false);
+      });
+    return () => subscriber();
+  }, []);
+
   return (
     <ScrollView>
       <View style={{backgroundColor: '#faf0d4'}}>
